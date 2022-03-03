@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Livestream from "./pages/Livestream";
 
+import axios from "axios";
+
 const infuraId =
   "https://mainnet.infura.io/v3/97c2d52095a84da7a0b710a8daa16acf";
 // "https://rinkeby.infura.io/v3/97c2d52095a84da7a0b710a8daa16acf";
@@ -53,6 +55,9 @@ const App = () => {
   const [account, setaccount] = useState("");
   const [chainId, setChainId] = useState();
 
+  const [sessions, setSessions] = useState([]);
+  const [stream, setStream] = useState({ isActive: false });
+
   const networkChanged = (chainId) => {
     console.log({ chainId });
     setChainId(chainId);
@@ -73,6 +78,52 @@ const App = () => {
   useEffect(() => {
     changeNetwork();
   }, [chainId]);
+
+  const fetchSessions = async () => {
+    try {
+      const url = `https://livepeer.com/api/stream/${process.env.REACT_APP_STREAM_ID}/sessions`;
+      const options = {
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      };
+      const { data } = await axios.get(url, options);
+      console.log(data);
+      setSessions(data);
+    } catch (err) {
+      if (err) console.log(err);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchSessions();
+  }, []);
+
+  const fetchPlaybackId = async () => {
+    console.log("stream id: ", process.env.REACT_APP_STREAM_ID);
+    console.log("api key: ", process.env.REACT_APP_API_KEY);
+    try {
+      const url = `https://livepeer.com/api/stream/${process.env.REACT_APP_STREAM_ID}`;
+      const options = {
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      };
+      const { data } = await axios.get(url, options);
+      console.log(data);
+      setStream(data);
+    } catch (err) {
+      if (err) console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaybackId();
+  }, []);
 
   const onConnectWallet = async () => {
     console.log("connecting wallet...");
@@ -155,7 +206,7 @@ const App = () => {
         <Route
           exact
           path="/live"
-          component={() => <Livestream account={account} />}
+          component={() => <Livestream account={account} stream={stream} />}
         />
       </Switch>
     </div>

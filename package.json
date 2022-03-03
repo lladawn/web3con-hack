@@ -17,6 +17,10 @@
     "react-scripts": "^4.0.3",
     "start": "^5.1.0",
     "styled-components": "^5.3.3",
+    "video.js": "^7.11.8",
+    "videojs-contrib-hls": "^5.15.0",
+    "videojs-contrib-quality-levels": "^2.1.0",
+    "videojs-hls-quality-selector": "^1.1.4",
     "web-vitals": "^1.1.2",
     "web3": "^1.6.1",
     "web3modal": "^1.9.5"
