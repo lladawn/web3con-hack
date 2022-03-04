@@ -42,7 +42,7 @@ const changeNetwork = async () => {
       method: "wallet_switchEthereumChain",
       params: [
         {
-          chainId: "0x1",
+          chainId: `0x${Number(4).toString(16)}`, // mumbai = 80001 // polygon = 137 // rinkeby = 4
         },
       ],
     });
