@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Livestream from "./pages/Livestream";
 
 import axios from "axios";
+import Landing from "./pages/Landing";
 
 const infuraId =
   "https://mainnet.infura.io/v3/97c2d52095a84da7a0b710a8daa16acf";
@@ -203,12 +204,14 @@ const App = () => {
       />
       <Switch>
         <Route exact path="/" component={() => <Home account={account} />} />
+        <Route exact path="/landing" component={() => <Landing />} />
         <Route
           exact
           path="/live"
           component={() => <Livestream account={account} stream={stream} />}
         />
       </Switch>
+      
     </div>
   );
 };

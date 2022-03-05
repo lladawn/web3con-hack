@@ -4,18 +4,18 @@ import { NavLink } from "react-router-dom";
 import provider from "../ethereum/ethers";
 import makeBlockie from "ethereum-blockies-base64";
 import axios from "axios";
+import Background from "../assets/images/Background.png"
 
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  /* width: 100vw; */
+  background-image: url(${Background});
   height: fit-content;
   padding: 12px;
-  background-color: #131312;
-
-  border-bottom: 1px solid #434243;
+  background-color: black ;
+  margin: 0 0 -100px 0 ;
   top: 0;
   position: sticky;
   z-index: 100;
@@ -172,6 +172,9 @@ const Header = ({ account, onConnectWallet, onDisconnect }) => {
           </Item>
           <Item exact to="/live" activeClassName="selected">
             <h4>Livestream</h4>
+          </Item>
+          <Item exact to="/landing" activeClassName="selected">
+            <h4>Landing</h4>
           </Item>
         </HeaderFields>
         {account === "" || typeof account === "undefined" ? (

@@ -47,6 +47,7 @@ export const VideoJS = (props) => {
             ref={videoRef}
             className="video-js vjs-big-play-centered"
             height="200px"
+            border-radius="30px"
           />
         </div>
       </VideoContainer>

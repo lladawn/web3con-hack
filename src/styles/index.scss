@@ -23,7 +23,7 @@ body {
   }
 
   button {
-    background-color: $button-background;
+    background-color: transparent;
     border: none;
     border-radius: .5rem;
     color: $foreground;
@@ -44,11 +44,11 @@ body {
   }
 
   input {
-    background-color: $background;
+    background-color:  transparent;
     border: 1px solid $border-color-secondary;
     border-radius: .5rem;
     color: $foreground;
-    height: 2.5rem;
+    height: .5rem;
     padding-left: .5rem;
     width: 100%;
   }

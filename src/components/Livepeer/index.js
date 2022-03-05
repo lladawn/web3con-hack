@@ -11,7 +11,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 25px;
   text-align: center;
-  margin: 15px;
+  color:transparent;
 `;
 
 const Livepeer = ({ stream }) => {
@@ -50,6 +50,7 @@ const Livepeer = ({ stream }) => {
     fluid: true,
     height: 10,
     width: 10,
+    radius:10,
     sources: [
       {
         // src: stream
@@ -78,13 +79,13 @@ const Livepeer = ({ stream }) => {
 
   return (
     <Container>
-      <Title>AMA Session</Title>
+      <Title>Sanchit</Title>
       {/* {stream.isActive ? (
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
       ) : (
         <Title>No live session going on...</Title>
       )} */}
-      <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+      {/* <VideoJS options={videoJsOptions} onReady={handlePlayerReady}/> */}
     </Container>
   );
 };

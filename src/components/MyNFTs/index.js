@@ -3,28 +3,65 @@ import styled from "styled-components";
 // import NFT from "../images/unnamed.png";
 import BouncrToken from "../../ethereum/BouncrToken";
 import axios from "axios";
+import Background from "../../assets/images/Background.png"; 
+import Profile from "../../assets/images/Profile.png"
 
 const Container = styled.div`
-  margin: 0 0 0 200px;
+padding: 100px 0 0 0 ;
   display: flex;
+  background-color:black;
   flex-wrap: wrap;
+  background-image: url(${Background});
   gap: 30px;
+
 
   @media screen and (max-width: 600px) {
     justify-content: center;
   }
 `;
 
+const Profiles = styled.div`
+
+display:inline-block;
+margin: 80px 0 0 400px;
+
+
+`; 
+
+const NFT = styled.div`
+margin: 100px 0 0 300px ;
+display:flex;
+flex-wrap: wrap;
+border-top: 2px solid white;
+border-bottom-width: 15px;
+`;
+
+const WalletAddress = styled.div`
+display:inline-block;
+color:white;
+font-size:50px;
+font-weight: bold;
+margin: 170px 0 0 0px ;
+
+
+`;
+
 const Box = styled.div`
   background-color: white;
   height: 400px;
   width: 320px;
+
   border-radius: 20px;
   margin: 25px 0 0 20px;
+
   padding: 10px 0 0 0;
   /* box-shadow: 10px 10px 10px grey; */
   border: solid black 2px;
 `;
+
+const Feed = styled.div`
+
+`
 
 const ImageConatiner = styled.div`
   background-color: white;
@@ -138,14 +175,15 @@ const MyNFTs = ({ account }) => {
   return (
     <>
       <Container>
-        {/* <Box>
-          <ImageConatiner>
-            <img src={NFT} width="100%"></img>
-          </ImageConatiner>
-          <Title>JorrVichar Karvanu Ne MojMa Revanu</Title>
-          <Button>Opensea</Button>
-        </Box> */}
+        <Profiles>
+        <img src={Profile}></img>
+        </Profiles>
+        <WalletAddress> 0x62....B9b9</WalletAddress>
+        <NFT>
         {listCards}
+        </NFT>
+        
+
       </Container>
     </>
   );

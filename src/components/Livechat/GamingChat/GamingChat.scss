@@ -1,17 +1,17 @@
 @import "../../../styles/variables";
 
 section.chat-members-container {
-  border: 1px solid $border-color;
-  border-top: 0;
+  border-top: 2px;
   border-bottom: 0;
-  background-color: transparent;
   display: flex;
   flex: 1;
   justify-content: space-between;
   position: absolute;
   right: 0;
+  padding: 0 0 0 10px;
+  margin: 0 0 0 100px;
   transition: all 1s;
-  width: 320px;
+  width: 500px;
 
   > .members-container {
     align-items: center;
@@ -163,7 +163,7 @@ section.chat-members-container {
     background-color: $component-background;
     border-bottom: 1px solid $border-color;
     display: flex;
-    height: 3.75rem;
+    height: .75rem;
     justify-content: space-between;
     padding: 0 10px;
     position: relative;
@@ -175,7 +175,7 @@ section.chat-members-container {
       background-repeat: no-repeat;
       border-radius: 0.5rem;
       cursor: pointer;
-      height: 2.5rem;
+      height: .5rem;
       width: 2.5rem;
 
       &.hide-btn {
