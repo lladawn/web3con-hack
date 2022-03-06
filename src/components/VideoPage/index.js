@@ -9,7 +9,7 @@ import {
   MintPoap,
   PoapMinted,
 } from "./videopageelements";
-import axios from "axios";
+// import axios from "axios";
 import PoapNFT from "../../ethereum/PoapNFT";
 
 const Videopage = ({ content, segment, account }) => {
@@ -20,19 +20,19 @@ const Videopage = ({ content, segment, account }) => {
   const [image, setImage] = React.useState("");
   const [name, setName] = React.useState("");
   const [minted, setMinted] = React.useState(false);
-
   const [poapMinted, setPoapMinted] = useState(false);
+
   let videolength = 0;
   let watchLength = 0;
 
-  function myfetch(url, options, timeout = 7000) {
-    return Promise.race([
-      fetch(url, options),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("timeout")), timeout)
-      ),
-    ]);
-  }
+  // function myfetch(url, options, timeout = 7000) {
+  //   return Promise.race([
+  //     fetch(url, options),
+  //     new Promise((_, reject) =>
+  //       setTimeout(() => reject(new Error("timeout")), timeout)
+  //     ),
+  //   ]);
+  // }
 
   async function mintNFT() {
     setMinted(true);
@@ -73,8 +73,8 @@ const Videopage = ({ content, segment, account }) => {
     player = new window.YT.Player("player", {
       height: "390",
       width: "640",
-      videoId: segment === "Silver" ? "5xYDXp7fkY4" : content.video.slice(30),
-      // videoId: "5xYDXp7fkY4",
+      // videoId: segment === "Silver" ? "5xYDXp7fkY4" : content.video.slice(30),
+      videoId: "5xYDXp7fkY4",
       playerVars: {
         playsinline: 1,
       },
@@ -87,9 +87,7 @@ const Videopage = ({ content, segment, account }) => {
 
   function onPlayerReady(event) {
     var total_time = player.getDuration();
-    // console.log(total_time);
     const title = player.getVideoData().title;
-    // console.log("title", title);
     setName(title);
     videolength = parseInt(total_time);
     event.target.playVideo();
@@ -121,18 +119,12 @@ const Videopage = ({ content, segment, account }) => {
     player.stopVideo();
   }
 
-  // function handleData(data) {
-  //   if (data.length != 42) {
-  //     window.alert("Please enter valid wallet address");
-  //   } else {
-  //     console.log("address: ", data);
-  //     setAddress(data);
-  //   }
-  //   setMinted(false);
-  // }
-
   React.useEffect(() => {
-    window.YT.ready(onYouTubeIframeAPIReady);
+    try {
+      window.YT.ready(onYouTubeIframeAPIReady);
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
   const fetchPoapBalance = async () => {

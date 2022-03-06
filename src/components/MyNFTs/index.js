@@ -40,7 +40,7 @@ const WalletAddress = styled.div`
   margin: 170px 0 0 0px;
 `;
 
-const Box = styled.div`
+export const Box = styled.div`
   background-color: white;
   height: 400px;
   width: 320px;
@@ -55,7 +55,7 @@ const Box = styled.div`
 
 const Feed = styled.div``;
 
-const ImageConatiner = styled.div`
+export const ImageConatiner = styled.div`
   background-color: white;
   width: 300px;
   height: 350px;
@@ -65,13 +65,13 @@ const ImageConatiner = styled.div`
 
 const Image = styled.image``;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   color: black;
   text-align: center;
   margin: -25px 0px 0px 30px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   text-decoration: none;
   height: 40px;
   width: 100px;
@@ -99,71 +99,7 @@ const Button = styled.button`
   }
 `;
 
-const MyNFTs = ({ account }) => {
-  const [listCards, setListCards] = useState([]);
-  const run = async () => {
-    try {
-      const userAddress = account;
-      console.log("user address: ", userAddress);
-      const balance = await BouncrToken.methods
-        .balanceOf(userAddress.toString())
-        .call();
-
-      console.log("Jor token balance: ", balance);
-
-      let listOfCards = [];
-
-      for (let i = 0; i < balance; i++) {
-        const tokenId = await BouncrToken.methods
-          .tokenOfOwnerByIndex(userAddress, i)
-          .call();
-
-        const tokenUri = await BouncrToken.methods.tokenURI(tokenId).call();
-        console.log(tokenUri);
-
-        const url = tokenUri;
-
-        // const url =
-        //   // `https://api.opensea.io/api/v1/asset/0x2E9983b023934e72e1E115Ab6AEbB3636f1C4Cbe/${tokenId}/`;
-        //   `https://rinkeby-api.opensea.io/api/v1/asset/0xe8b533C9936eF21850B0Fa8C8F1114b164540039/${tokenId}/`;
-        const { data } = await axios.get(url);
-        console.log(data.image);
-
-        let card = renderCard(
-          `Bouncr#${tokenId}`,
-          `https://testnets.opensea.io/assets/0xe8b533c9936ef21850b0fa8c8f1114b164540039/${tokenId}`,
-          data.image
-        );
-        listOfCards.push(card);
-      }
-      setListCards(listOfCards);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const renderCard = (name, permalink, image) => {
-    return (
-      <Box key={permalink}>
-        <ImageConatiner>
-          <img src={image} width="100%"></img>
-        </ImageConatiner>
-        <div style={{ display: "flex" }}>
-          <Title>{name}</Title>
-          <Button>
-            <a href={permalink} target="_blank">
-              Opensea
-            </a>
-          </Button>
-        </div>
-      </Box>
-    );
-  };
-
-  useEffect(() => {
-    run();
-  }, [account]);
-
+const MyNFTs = ({ account, listCards }) => {
   const userAddress = `${account.slice(0, 6)}....${account.slice(-4)}`;
 
   return (

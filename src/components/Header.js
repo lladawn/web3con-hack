@@ -190,17 +190,17 @@ const Header = ({
             </>
           ) : null}
           {level.gold ? (
-            <Item exact to="/gold" activeClassName="selected">
+            <Item exact to="/Gold" activeClassName="selected">
               <h4>Gold</h4>
             </Item>
           ) : null}
           {level.silver ? (
-            <Item exact to="/silver" activeClassName="selected">
+            <Item exact to="/Silver" activeClassName="selected">
               <h4>Silver</h4>
             </Item>
           ) : null}
           {level.bronze ? (
-            <Item exact to="/bronze" activeClassName="selected">
+            <Item exact to="/Bronze" activeClassName="selected">
               <h4>Bronze</h4>
             </Item>
           ) : null}

@@ -9,10 +9,9 @@ import {
   Description,
   TextWrapper,
 } from "./elements";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 
 import "./style.css";
-
 
 var Video = "https://player.vimeo.com/video/578227462?h=a04379fb42";
 

@@ -1,11 +1,11 @@
 import React from "react";
 import MyNFTs from "../components/MyNFTs";
 
-const Home = ({ account }) => {
+const Home = ({ account, listCards }) => {
   return (
     <>
       <div>Owned NFTs</div>
-      <MyNFTs account={account} />
+      <MyNFTs account={account} listCards={listCards} />
     </>
   );
 };
