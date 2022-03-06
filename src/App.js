@@ -9,9 +9,14 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Livestream from "./pages/Livestream";
+import Segment from "./pages/Segment";
+import ContentPage from "./pages/ContentPage";
+import ErrorPage from "./components/ErrorPage";
 
 import axios from "axios";
 import Landing from "./pages/Landing";
+import BouncrToken from "./ethereum/BouncrToken";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 const infuraId =
   "https://mainnet.infura.io/v3/97c2d52095a84da7a0b710a8daa16acf";
@@ -55,6 +60,10 @@ const changeNetwork = async () => {
 const App = () => {
   const [account, setaccount] = useState("");
   const [chainId, setChainId] = useState();
+  const [gold, setGold] = useState(false);
+  const [silver, setSilver] = useState(false);
+  const [bronze, setBronze] = useState(false);
+  const [haveTokens, setHaveTokens] = useState(false);
 
   const [sessions, setSessions] = useState([]);
   const [stream, setStream] = useState({ isActive: false });
@@ -162,10 +171,10 @@ const App = () => {
     console.log("cached provider after clear: ", web3Modal.cachedProvider);
     provider = null;
     setaccount("");
-    // setGold(false);
-    // setSilver(false);
-    // setBronze(false);
-    // setHaveTokens(false);
+    setGold(false);
+    setSilver(false);
+    setBronze(false);
+    setHaveTokens(false);
     window.location.reload();
   };
 
@@ -177,9 +186,9 @@ const App = () => {
           const accounts = await web3.eth.getAccounts();
           setaccount(accounts[0]);
           console.log(accounts);
-          // setGold(false);
-          // setSilver(false);
-          // setBronze(false);
+          setGold(false);
+          setSilver(false);
+          setBronze(false);
           window.location.reload();
         });
       } catch (err) {
@@ -195,23 +204,129 @@ const App = () => {
     onConnectWallet();
   }, []);
 
+  const run = async () => {
+    try {
+      setGold(false);
+      setSilver(false);
+      setBronze(false);
+      const userAddress = account;
+      console.log("user address: ", userAddress);
+      const balance = await BouncrToken.methods
+        .balanceOf(
+          userAddress.toString()
+          // "0x66Dc3BFCD29E24fDDeE7f405c705220E6142e4cD"
+        )
+        .call();
+
+      console.log("Bouncr token balance: ", balance);
+
+      if (balance > 0) setHaveTokens(true);
+
+      for (let i = 0; i < balance; i++) {
+        const tokenId = await BouncrToken.methods
+          .tokenOfOwnerByIndex(userAddress, i)
+          .call();
+
+        const tokenUri = await BouncrToken.methods.tokenURI(tokenId).call();
+        console.log(tokenUri);
+
+        const url = tokenUri;
+
+        // const url = `https://rinkeby-api.opensea.io/api/v1/asset/0xe8b533C9936eF21850B0Fa8C8F1114b164540039/${tokenId}/`;
+
+        const { data } = await axios.get(url);
+
+        await data.traits;
+
+        await data.traits.map((trait) => {
+          //   console.log(trait);
+          if (trait.trait_type === "Level") {
+            console.log(trait.value);
+            if (trait.value === "Gold") {
+              setGold(true);
+              setSilver(true);
+              setBronze(true);
+            } else if (trait.value === "Silver") {
+              setSilver(true);
+              setBronze(true);
+            } else if (trait.value === "Bronze") setBronze(true);
+          }
+          return 0;
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    run();
+  }, [account, chainId]);
+
   return (
     <div className="App">
       <Header
         account={account}
         onConnectWallet={onConnectWallet}
         onDisconnect={onDisconnect}
+        level={{ gold: gold, silver: silver, bronze: bronze }}
+        haveTokens={haveTokens}
       />
       <Switch>
-        <Route exact path="/" component={() => <Home account={account} />} />
-        <Route exact path="/landing" component={() => <Landing />} />
-        <Route
+        <ProtectedRoute
           exact
+          level={haveTokens}
+          path="/home"
+          component={() => <Home account={account} />}
+        />
+        <Route exact path="/" component={() => <Landing />} />
+        <ProtectedRoute
+          exact
+          level={haveTokens}
           path="/live"
           component={() => <Livestream account={account} stream={stream} />}
         />
+        <ProtectedRoute
+          level={gold}
+          exact
+          path="/Gold"
+          component={() => <Segment segment="Gold" />}
+        />
+        <ProtectedRoute
+          level={gold}
+          exact
+          path="/Gold/:id"
+          component={() => <ContentPage segment="Gold" account={account} />}
+        />
+        <ProtectedRoute
+          level={silver}
+          exact
+          path="/Silver"
+          component={() => <Segment segment="Silver" />}
+        />
+        <ProtectedRoute
+          level={silver}
+          exact
+          path="/Silver/:id"
+          component={() => <ContentPage segment="Silver" account={account} />}
+        />
+        <ProtectedRoute
+          level={bronze}
+          exact
+          path="/Bronze"
+          component={() => <Segment segment="Bronze" />}
+        />
+        <ProtectedRoute
+          level={bronze}
+          exact
+          path="/Bronze/:id"
+          component={() => <ContentPage segment="Bronze" account={account} />}
+        />
+        <Route
+          path="*"
+          component={() => <ErrorPage text={"404 NOT FOUND"} />}
+        />
       </Switch>
-      
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import provider from "../ethereum/ethers";
 import makeBlockie from "ethereum-blockies-base64";
 import axios from "axios";
-import Background from "../assets/images/Background.png"
+import Background from "../assets/images/Background.png";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -14,8 +14,8 @@ const HeaderContainer = styled.div`
   background-image: url(${Background});
   height: fit-content;
   padding: 12px;
-  background-color: black ;
-  margin: 0 0 -100px 0 ;
+  background-color: black;
+  margin: 0 0 -100px 0;
   top: 0;
   position: sticky;
   z-index: 100;
@@ -112,7 +112,13 @@ const BlockieIcon = styled.img`
   border-radius: 30px;
 `;
 
-const Header = ({ account, onConnectWallet, onDisconnect }) => {
+const Header = ({
+  account,
+  onConnectWallet,
+  onDisconnect,
+  haveTokens,
+  level,
+}) => {
   const [ensName, setEnsName] = useState();
   const [icon, setIcon] = useState();
 
@@ -164,18 +170,40 @@ const Header = ({ account, onConnectWallet, onDisconnect }) => {
     <>
       <HeaderContainer>
         <Logo>
-          <h2>Bouncr</h2>
+          <NavLink
+            exact
+            to="/"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            <h2>Bouncr</h2>
+          </NavLink>
         </Logo>
         <HeaderFields>
-          <Item exact to="/" activeClassName="selected">
-            <h4>Home</h4>
-          </Item>
-          <Item exact to="/live" activeClassName="selected">
-            <h4>Livestream</h4>
-          </Item>
-          <Item exact to="/landing" activeClassName="selected">
-            <h4>Landing</h4>
-          </Item>
+          {haveTokens ? (
+            <>
+              <Item exact to="/home" activeClassName="selected">
+                <h4>Home</h4>
+              </Item>
+              <Item exact to="/live" activeClassName="selected">
+                <h4>Livestream</h4>
+              </Item>
+            </>
+          ) : null}
+          {level.gold ? (
+            <Item exact to="/gold" activeClassName="selected">
+              <h4>Gold</h4>
+            </Item>
+          ) : null}
+          {level.silver ? (
+            <Item exact to="/silver" activeClassName="selected">
+              <h4>Silver</h4>
+            </Item>
+          ) : null}
+          {level.bronze ? (
+            <Item exact to="/bronze" activeClassName="selected">
+              <h4>Bronze</h4>
+            </Item>
+          ) : null}
         </HeaderFields>
         {account === "" || typeof account === "undefined" ? (
           <Wallet onClick={onConnectWallet}>

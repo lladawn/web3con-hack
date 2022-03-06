@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import NFT from "../images/unnamed.png";
+import NFT from "../../assets/images/Avatar.png";
 import BouncrToken from "../../ethereum/BouncrToken";
 import axios from "axios";
-import Background from "../../assets/images/Background.png"; 
-import Profile from "../../assets/images/Profile.png"
+import Background from "../../assets/images/Background.png";
+import Profile from "../../assets/images/Profile.png";
 
 const Container = styled.div`
-padding: 100px 0 0 0 ;
+  padding: 100px 0 0 0;
   display: flex;
-  background-color:black;
+  background-color: black;
   flex-wrap: wrap;
   background-image: url(${Background});
   gap: 30px;
-
 
   @media screen and (max-width: 600px) {
     justify-content: center;
@@ -21,29 +20,24 @@ padding: 100px 0 0 0 ;
 `;
 
 const Profiles = styled.div`
+  display: inline-block;
+  margin: 80px 0 0 400px;
+`;
 
-display:inline-block;
-margin: 80px 0 0 400px;
-
-
-`; 
-
-const NFT = styled.div`
-margin: 100px 0 0 300px ;
-display:flex;
-flex-wrap: wrap;
-border-top: 2px solid white;
-border-bottom-width: 15px;
+const NFTs = styled.div`
+  margin: 100px 0 0 300px;
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 2px solid white;
+  border-bottom-width: 15px;
 `;
 
 const WalletAddress = styled.div`
-display:inline-block;
-color:white;
-font-size:50px;
-font-weight: bold;
-margin: 170px 0 0 0px ;
-
-
+  display: inline-block;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  margin: 170px 0 0 0px;
 `;
 
 const Box = styled.div`
@@ -59,9 +53,7 @@ const Box = styled.div`
   border: solid black 2px;
 `;
 
-const Feed = styled.div`
-
-`
+const Feed = styled.div``;
 
 const ImageConatiner = styled.div`
   background-color: white;
@@ -172,18 +164,31 @@ const MyNFTs = ({ account }) => {
     run();
   }, [account]);
 
+  const userAddress = `${account.slice(0, 6)}....${account.slice(-4)}`;
+
   return (
     <>
       <Container>
         <Profiles>
-        <img src={Profile}></img>
+          <img src={Profile}></img>
         </Profiles>
-        <WalletAddress> 0x62....B9b9</WalletAddress>
-        <NFT>
-        {listCards}
-        </NFT>
-        
-
+        <WalletAddress>{userAddress}</WalletAddress>
+        <NFTs>
+          {listCards}
+          {/* <Box>
+            <ImageConatiner>
+              <img src={NFT} width="100%"></img>
+            </ImageConatiner>
+            <div style={{ display: "flex" }}>
+              <Title>Bouncr#1</Title>
+              <Button>
+                <a href="" target="_blank">
+                  Opensea
+                </a>
+              </Button>
+            </div>
+          </Box> */}
+        </NFTs>
       </Container>
     </>
   );
