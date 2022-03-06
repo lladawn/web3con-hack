@@ -19,6 +19,7 @@ import axios from "axios";
 import Landing from "./pages/Landing";
 import BouncrToken from "./ethereum/BouncrToken";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import Meet from "./pages/Meet";
 
 const infuraId =
   "https://mainnet.infura.io/v3/97c2d52095a84da7a0b710a8daa16acf";
@@ -70,6 +71,8 @@ const App = () => {
 
   const [sessions, setSessions] = useState([]);
   const [stream, setStream] = useState({ isActive: false });
+
+  const [roomId, setRoomId] = useState();
 
   const networkChanged = (chainId) => {
     console.log({ chainId });
@@ -329,6 +332,22 @@ const App = () => {
     listOwnedNFTs();
   }, [account]);
 
+  const fetchMeetDetails = async () => {
+    try {
+      // const url = "http://localhost:4000/api/ongoingMeetDetails";
+      const url = "https://jorr-parivar.herokuapp.com/api/ongoingMeetDetails";
+      const { data } = await axios.get(url);
+      console.log("meet details: ", data);
+      setRoomId(data.roomId);
+    } catch (err) {
+      if (err) console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchMeetDetails();
+  }, []);
+
   return (
     <div className="App">
       <Header
@@ -337,6 +356,7 @@ const App = () => {
         onDisconnect={onDisconnect}
         level={{ gold: gold, silver: silver, bronze: bronze }}
         haveTokens={haveTokens}
+        roomId={roomId}
       />
       <Switch>
         <ProtectedRoute
@@ -351,6 +371,12 @@ const App = () => {
           level={haveTokens}
           path="/live"
           component={() => <Livestream account={account} stream={stream} />}
+        />
+        <ProtectedRoute
+          exact
+          level={haveTokens}
+          path="/meet"
+          component={() => <Meet roomId={roomId} />}
         />
         <ProtectedRoute
           level={gold}

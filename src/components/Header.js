@@ -118,6 +118,7 @@ const Header = ({
   onDisconnect,
   haveTokens,
   level,
+  roomId,
 }) => {
   const [ensName, setEnsName] = useState();
   const [icon, setIcon] = useState();
@@ -187,6 +188,11 @@ const Header = ({
               <Item exact to="/live" activeClassName="selected">
                 <h4>Livestream</h4>
               </Item>
+              {roomId ? (
+                <Item exact to="/meet" activeClassName="selected">
+                  <h4>Meet</h4>
+                </Item>
+              ) : null}
             </>
           ) : null}
           {level.gold ? (
