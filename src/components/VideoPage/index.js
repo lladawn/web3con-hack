@@ -37,32 +37,7 @@ const Videopage = ({ content, segment, account }) => {
   async function mintNFT() {
     setMinted(true);
     setLoading(true);
-    // const data = JSON.stringify({
-    //   name: name,
-    //   address: address,
-    //   url: "https://www.youtube.com/watch?v=5xYDXp7fkY4", //videoURL,
-    // });
 
-    // const url = `https://nft-yt-backend.prathamprasoon.repl.co/mint`;
-    // const options = {
-    //   // Adding method type
-    //   method: "POST",
-    //   // Adding body or contents to send
-    //   body: data,
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    // };
-    // try {
-    //   const res = await axios.post(url, options);
-    //   console.log(res);
-    //   if (res) {
-    //     console.log("Minted");
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   alert("Failing to fetch the api");
-    // }
     console.log("Minting");
     await PoapNFT.methods.mintPoap().send({ from: account, gas: "210000" });
     setPoapMinted(true);
@@ -73,8 +48,8 @@ const Videopage = ({ content, segment, account }) => {
     player = new window.YT.Player("player", {
       height: "390",
       width: "640",
-      // videoId: segment === "Silver" ? "5xYDXp7fkY4" : content.video.slice(30),
-      videoId: "5xYDXp7fkY4",
+      videoId: segment === "Silver" ? "5xYDXp7fkY4" : content.video.slice(30),
+      // videoId: "5xYDXp7fkY4",
       playerVars: {
         playsinline: 1,
       },
@@ -144,15 +119,6 @@ const Videopage = ({ content, segment, account }) => {
     <div>
       <Container>
         <VideoWrapper>
-          {/* <iframe
-            title="vimeo-player"
-            src={content ? content.video : null}
-            width="1000"
-            height="500"
-            border-radius="20px"
-            frameBorder="0"
-            allowFullScreen
-          ></iframe> */}
           <div className="mt-10" id="player"></div>
           {watchedVideo ? (
             !poapMinted ? (
@@ -167,13 +133,7 @@ const Videopage = ({ content, segment, account }) => {
             <BackLink to={`/${segment}`}>← Back to Episodes</BackLink>
           </Description>
           <Title> {content.title} </Title>
-          <Description>
-            {/* The stakes are higher as Ms. Stoner's ailments worsen and the cat's
-            sentience fades. Fefe tries to get her paws on more Skunky Smoke
-            while Baxter discovers a mysterious world and Dave meets a new
-            friend.{" "} */}
-            {content.description}
-          </Description>
+          <Description>{content.description}</Description>
         </TextWrapper>
       </Container>
     </div>
