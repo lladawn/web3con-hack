@@ -4,7 +4,7 @@ export const OuterContainer = styled.div``;
 
 export const Container = styled.div`
   height: 400px;
-  width: 290px;
+  width: 330px;
   color: white;
   /* display: flex;
   flex-direction: column; */

@@ -12,7 +12,7 @@ export const Container = styled.div`
   background-color: #1b1b1b;
   border-radius: 25px;
   margin-top: 20px;
-  margin: 30px auto;
+  margin: 100px auto;
 `;
 
 export const ImgWrapper = styled.div`

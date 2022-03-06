@@ -43,7 +43,7 @@ const HeaderFields = styled.div`
 const Item = styled(NavLink)`
   text-decoration: none;
   height: 40px;
-  width: 100px;
+  width: 120px;
   border-radius: 50px;
   color: white;
 
@@ -197,17 +197,17 @@ const Header = ({
           ) : null}
           {level.gold ? (
             <Item exact to="/Gold" activeClassName="selected">
-              <h4>Gold</h4>
+              <h4>Admin</h4>
             </Item>
           ) : null}
           {level.silver ? (
             <Item exact to="/Silver" activeClassName="selected">
-              <h4>Silver</h4>
+              <h4>DAO</h4>
             </Item>
           ) : null}
           {level.bronze ? (
             <Item exact to="/Bronze" activeClassName="selected">
-              <h4>Bronze</h4>
+              <h4>TownSquare</h4>
             </Item>
           ) : null}
         </HeaderFields>

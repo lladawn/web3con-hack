@@ -8,6 +8,7 @@ import {
   BackLink,
   MintPoap,
   PoapMinted,
+  Box
 } from "./videopageelements";
 // import axios from "axios";
 import PoapNFT from "../../ethereum/PoapNFT";
@@ -117,6 +118,7 @@ const Videopage = ({ content, segment, account }) => {
 
   return (
     <div>
+      <Box>
       <Container>
         <VideoWrapper>
           <div className="mt-10" id="player"></div>
@@ -136,6 +138,7 @@ const Videopage = ({ content, segment, account }) => {
           <Description>{content.description}</Description>
         </TextWrapper>
       </Container>
+      </Box>
     </div>
   );
 };

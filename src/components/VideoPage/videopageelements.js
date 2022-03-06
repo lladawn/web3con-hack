@@ -1,15 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Background from "../../assets/images/Background.png"
 
 export const Container = styled.div`
   background-color: #1b1b1b;
   width: 1060px;
   height: 900px;
   border-radius: 20px;
-  margin: auto;
+  margin:auto;
   padding: 75px 0 0 60px;
 `;
+
+export const Box = styled.div`
+background-image: url(${Background});
+background-color:black;
+padding: 150px 0 ;
+margin: -100px 0 0 0;
+`
 
 export const VideoWrapper = styled.div`
   // background-color: white;

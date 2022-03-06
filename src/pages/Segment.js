@@ -3,12 +3,16 @@ import React, { useState, useEffect } from "react";
 import Post from "../components/Post-Image";
 import PostV from "../components/Post-Video";
 import styled from "styled-components";
+import Background from "../assets/images/Background.png"
+
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 40px;
+  background-image: url(${Background});
+  background-color:black;
 `;
 
 const Segment = ({ segment }) => {

@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import Videopage from "../components/VideoPage";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Background from "../assets/images/Background.png";
 import ErrorPage from "../components/ErrorPage";
 
 const Container = styled.div`
   display: grid;
-  margin: 50px;
+  margin: 100px 0 0 0 ;
 `;
 
 const ContentPage = ({ segment, account }) => {
