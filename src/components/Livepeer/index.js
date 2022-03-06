@@ -11,7 +11,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 25px;
   text-align: center;
-  color:transparent;
+  color: transparent;
 `;
 
 const Livepeer = ({ stream }) => {
@@ -22,7 +22,7 @@ const Livepeer = ({ stream }) => {
 
   const fetchPlaybackId = async () => {
     try {
-      const url = `https://livepeer.com/api/stream/e42bd9b4-3d01-4a93-bce6-92c54cdb22e1`;
+      const url = `https://livepeer.com/api/stream/${process.env.REACT_APP_STREAM_ID}`;
       const options = {
         headers: {
           "content-type": "application/json",
@@ -50,16 +50,16 @@ const Livepeer = ({ stream }) => {
     fluid: true,
     height: 10,
     width: 10,
-    radius:10,
+    radius: 10,
     sources: [
       {
-        // src: stream
-        //   ? stream.isActive
-        //     ? `https://cdn.livepeer.com/hls/${stream.playbackId}/index.m3u8`
-        //     : null
-        //   : null,
+        src: stream
+          ? stream.isActive
+            ? `https://cdn.livepeer.com/hls/${stream.playbackId}/index.m3u8`
+            : null
+          : null,
         // src: "https://cdn.livepeer.com/hls/0b5881im2l3kb68f/index.m3u8",
-        src: "https://cdn.livepeer.com/recordings/e42bd945-bfa4-4320-a769-da5010368ac4/index.m3u8",
+        // src: "https://cdn.livepeer.com/recordings/e42bd945-bfa4-4320-a769-da5010368ac4/index.m3u8",
       },
     ],
   };
@@ -80,11 +80,11 @@ const Livepeer = ({ stream }) => {
   return (
     <Container>
       <Title>Sanchit</Title>
-      {/* {stream.isActive ? (
+      {stream.isActive ? (
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
       ) : (
         <Title>No live session going on...</Title>
-      )} */}
+      )}
       {/* <VideoJS options={videoJsOptions} onReady={handlePlayerReady}/> */}
     </Container>
   );
